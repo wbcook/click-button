@@ -1,18 +1,22 @@
-var AwpWop = {
+var Clickbutton = {
 
   score: 0
 
 };
 
-AwpWop.Game = function() {
+Clickbutton.Preloader = function () {};
 
-  this.score = 0;
+Clickbutton.Preloader.prototype = {
 
-};
+  init: function () {
 
-AwpWop.Game.prototype = {
+    this.scale.pageAlignHorizontally = true;
+
+  },
 
   preload: function() {
+
+    this.load.path = 'assets/';
 
     this.load.image('boring', 'assets/boring.png');
     this.load.image('cringe', 'assets/cringe.png');
@@ -27,6 +31,51 @@ AwpWop.Game.prototype = {
   },
 
   create: function() {
+
+    this.state.start('Clickbutton.MainMenu');
+
+  }
+
+};
+
+Clickbutton.MainMenu = function () {};
+
+Clickbutton.MainMenu.prototype = {
+
+  create: function () {
+
+    this.stage.backgroundColor = 0x000000;
+
+  },
+
+  start: function () {
+
+    this.state.start('Clickbutton.Game');
+
+  },
+
+  update: function () {}
+
+};
+
+Clickbutton.Game = function() {
+
+  this.score = 0;
+  this.love = null;
+
+};
+
+Clickbutton.Game.prototype = {
+
+  init: function() {
+
+    this.score = 0;
+
+  },
+
+  create: function() {
+
+    this.stage.backgroundColor = 0x000000;
 
     this.love = this.add.sprite(0, 0, 'love');
 
@@ -43,6 +92,8 @@ AwpWop.Game.prototype = {
 
 var game = new Phaser.Game(800, 450, Phaser.AUTO, 'game');
 
-game.state.add('AwpWop.Game', AwpWop.Game, true);
+game.state.add('Clickbutton.Preloader', Clickbutton.Preloader);
+game.state.add('Clickbutton.Preloader', Clickbutton.MainMenu);
+game.state.add('Clickbutton.Game', Clickbutton.Game);
 
-game.state.start('AwpWop.Game');
+game.state.start('Clickbutton.Game');
