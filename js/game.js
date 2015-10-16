@@ -18,15 +18,15 @@ Clickbutton.Preloader.prototype = {
 
     this.load.path = 'assets/';
 
-    this.load.image('boring', 'assets/boring.png');
-    this.load.image('cringe', 'assets/cringe.png');
-    this.load.image('knight', 'assets/knight.png');
-    this.load.image('love', 'assets/love.png');
-    this.load.image('mod', 'assets/mod.png');
-    this.load.image('rekt', 'assets/rekt.png');
-    this.load.image('sad', 'assets/sad.png');
-    this.load.image('schlick', 'assets/schlick.png');
-    this.load.image('seven', 'assets/seven.png');
+    this.load.image('love', 'love.png');
+    this.load.image('boring', 'boring.png');
+    this.load.image('cringe', 'cringe.png');
+    this.load.image('knight', 'knight.png');
+    this.load.image('mod', 'mod.png');
+    this.load.image('rekt', 'rekt.png');
+    this.load.image('sad', 'sad.png');
+    this.load.image('schlick', 'schlick.png');
+    this.load.image('seven', 'seven.png');
 
   },
 
@@ -46,11 +46,13 @@ Clickbutton.MainMenu.prototype = {
 
     this.stage.backgroundColor = 0x000000;
 
+    this.state.start('Clickbutton.Game');
+
   },
 
   start: function () {
 
-    this.state.start('Clickbutton.Game');
+
 
   },
 
@@ -93,7 +95,7 @@ Clickbutton.Game.prototype = {
 var game = new Phaser.Game(800, 450, Phaser.AUTO, 'game');
 
 game.state.add('Clickbutton.Preloader', Clickbutton.Preloader);
-game.state.add('Clickbutton.Preloader', Clickbutton.MainMenu);
+game.state.add('Clickbutton.MainMenu', Clickbutton.MainMenu);
 game.state.add('Clickbutton.Game', Clickbutton.Game);
 
-game.state.start('Clickbutton.Game');
+game.state.start('Clickbutton.Preloader');
