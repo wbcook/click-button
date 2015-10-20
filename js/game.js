@@ -10,6 +10,7 @@ Clickbutton.Preloader.prototype = {
 
   init: function () {
 
+    this.input.maxPointers = 1;
     this.scale.pageAlignHorizontally = true;
 
   },
@@ -46,13 +47,19 @@ Clickbutton.MainMenu.prototype = {
 
     this.stage.backgroundColor = 0x000000;
 
-    this.state.start('Clickbutton.Game');
+    var style = { font: "65px Arial", fill: "#ff0044", align: "center" };
+
+    var text = game.add.text(game.world.centerX, game.world.centerY, "- START -\nClick Button\n- GAME -", style);
+
+    text.anchor.set(0.5);
+
+    this.input.onDown.addOnce(this.start, this);
 
   },
 
   start: function () {
 
-
+    this.state.start('Clickbutton.Game');
 
   },
 
@@ -80,13 +87,26 @@ Clickbutton.Game.prototype = {
     this.stage.backgroundColor = 0x000000;
 
     this.love = this.add.sprite(0, 0, 'love');
+    this.love.inputEnabled = true;
+
+    this.love.events.onInputDown.add(this.clickedIt, this);
+
+  },
+
+  clickedIt: function (sprite, pointer) {
+
+    var x = this.rnd.between(0, this.game.width - this.love.width);
+    var y = this.rnd.between(0, this.game.height - this.love.height);
+
+    this.love.x = x;
+    this.love.y = y;
 
   },
 
   update: function() {
 
-    this.love.x = this.world.randomX;
-    this.love.y = this.world.randomY;
+    // this.love.x = this.world.randomX;
+    // this.love.y = this.world.randomY;
 
   }
 
