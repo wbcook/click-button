@@ -70,6 +70,13 @@ Clickbutton.MainMenu.prototype = {
 Clickbutton.Game = function() {
 
   this.score = 0;
+  this.scoreText = null;
+
+  this.timer = null;
+  this.timeText = null;
+
+  this.scoreText = null;
+
   this.love = null;
 
 };
@@ -86,6 +93,18 @@ Clickbutton.Game.prototype = {
 
     this.stage.backgroundColor = 0x000000;
 
+    var scoreStyle = { font: "16px Arial", fill: "#fff", align: "right" };
+    this.scoreText = game.add.text(100, 25, "Hits: " + this.score, scoreStyle);
+    this.scoreText.anchor.set(0.5);
+
+    var timeStyle = { font: "16px Arial", fill: "#fff", align: "right" };
+    this.timeText = game.add.text(700, 25, "Time: " + this.timeText, timeStyle);
+    this.timeText.anchor.set(0.5);
+
+    this.timer = this.time.create(false);
+    this.timer.add(10000, this.timeUp, this);
+    this.timer.start();
+
     this.love = this.add.sprite(0, 0, 'love');
     this.love.inputEnabled = true;
 
@@ -101,12 +120,27 @@ Clickbutton.Game.prototype = {
     this.love.x = x;
     this.love.y = y;
 
+    this.score++;
+    this.scoreText.text = "Hits: " + this.score;
+
+  },
+
+  timeUp: function() {
+
+    this.scoreText.text = "Time up! Hits:" + this.score;
+
+    this.timeText.visible = false;
+
+    this.love.inputEnabled = false;
+
   },
 
   update: function() {
 
-    // this.love.x = this.world.randomX;
-    // this.love.y = this.world.randomY;
+    if (this.timeText.visible)
+    {
+      this.timeText.text = 10 - Math.floor(this.timer.seconds);
+    }
 
   }
 
