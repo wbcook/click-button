@@ -77,7 +77,7 @@ Clickbutton.Game = function() {
 
   this.scoreText = null;
 
-  this.love = null;
+  this.target = null;
 
 };
 
@@ -105,20 +105,26 @@ Clickbutton.Game.prototype = {
     this.timer.add(10000, this.timeUp, this);
     this.timer.start();
 
-    this.love = this.add.sprite(0, 0, 'love');
-    this.love.inputEnabled = true;
+    this.target = this.add.sprite(0, 0, 'love');
+    this.target.inputEnabled = true;
 
-    this.love.events.onInputDown.add(this.clickedIt, this);
+    this.target.events.onInputDown.add(this.clickedIt, this);
 
   },
 
   clickedIt: function (sprite, pointer) {
 
-    var x = this.rnd.between(0, this.game.width - this.love.width);
-    var y = this.rnd.between(0, this.game.height - this.love.height);
+    var x = this.rnd.between(0, this.game.width - this.target.width);
+    var y = this.rnd.between(0, this.game.height - this.target.height);
 
-    this.love.x = x;
-    this.love.y = y;
+    this.target.x = x;
+    this.target.y = y;
+
+    this.addScore();
+
+  },
+
+  addScore: function () {
 
     this.score++;
     this.scoreText.text = "Hits: " + this.score;
@@ -131,7 +137,7 @@ Clickbutton.Game.prototype = {
 
     this.timeText.visible = false;
 
-    this.love.inputEnabled = false;
+    this.target.inputEnabled = false;
 
   },
 
